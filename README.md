@@ -1,4 +1,4 @@
-# 年龄助手 Ager
+# 年龄助手
 
 ![Ager](./res/image/icon_large.png)
 
@@ -6,4 +6,4 @@
 
 ![ScreenShot](./external/ScreenShot.png)
 
-[下载Ager](https://pan.baidu.com/s/1XouK3J6Enah0qmIuMLmJKg)
+[下载Ager](https://pan.baidu.com/s/1WsBaX-x8R8GOOS7tXBGGuw)
