@@ -1,8 +1,8 @@
-# 年龄助手 Ager
+# ![Ager](./res/image/icon.png) 年龄助手 Ager
 
-![Ager](./res/image/icon_large.png)
+年龄助手是一个电脑桌面应用，可根据公历（农历）生日查询周岁、虚岁、生肖和生活天数等，用 Java 语言编写，支持 Window/Linux/Mac OS 等操作系统
 
-根据公历（农历）生日计算周岁、虚岁、生肖和生活天数等。
+这是它的主界面
 
 ![ScreenShot](./external/ScreenShot.png)
 
