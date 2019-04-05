@@ -19,6 +19,7 @@ import javax.swing.event.HyperlinkListener;
 
 import ager.common.AgeFont;
 import ager.common.Constants;
+import ager.util.CalendarUtils;
 
 /**
  * 关于年龄助手窗口
@@ -79,10 +80,11 @@ public class AboutDialog extends JDialog {
 			contentPanel.add(textPane);
 		}
 		{
-			JLabel lblText = new JLabel("© 2015 李海涛");
+			JLabel lblText = new JLabel("© 2015-" + CalendarUtils.getThisYear() + " 李海涛");
 			lblText.setForeground(Color.GRAY);
 			lblText.setFont(plainFont);
-			lblText.setBounds(141, 193, 86, 15);
+			lblText.setBounds(130, 193, 150, 15);
+			lblText.setAlignmentX(CENTER_ALIGNMENT);
 			contentPanel.add(lblText);
 		}
 	}

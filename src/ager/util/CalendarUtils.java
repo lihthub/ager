@@ -123,5 +123,12 @@ public class CalendarUtils {
 		GregorianCalendar cal = new GregorianCalendar();
 		return cal.isLeapYear(year); // 是否闰年
 	}
+	
+	/**
+	 * 返回今年年份
+	 */
+	public static int getThisYear() {
+		return Calendar.getInstance().get(Calendar.YEAR);
+	} 
 
 }

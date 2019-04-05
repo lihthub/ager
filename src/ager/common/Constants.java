@@ -4,6 +4,9 @@ public class Constants {
 	private static String folderName = "./res";
 	
 	public static final String CONFIGPATH = folderName + "/setting.ini"; // 用户配置文件路径
+	
+	public static final String BACKGROUND_IMAGE_URL = folderName + "/image/background.png"; // 背景图片
+	
 	public static final String ICON_URL = folderName + "/image/icon.png"; // 主窗口图标地址
 	public static final String ICON_LARGE_URL = folderName + "/image/icon_large.png"; // 大号程序图标
 	public static final String ICON_EXPORT_URL = folderName + "/image/export.png"; // 导出图标地址

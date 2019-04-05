@@ -1,9 +1,10 @@
 package ager.view;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.Font;
-import java.awt.SystemColor;
+import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -41,6 +42,7 @@ import ager.common.AgeFont;
 import ager.common.Constants;
 import ager.util.CalendarUtils;
 import ager.util.ChineseCalendar;
+import ager.util.SystemUtils;
 import ager.util.Utils;
 
 /**
@@ -95,7 +97,6 @@ public class MainFrame extends JFrame {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
 		Toolkit kit = Toolkit.getDefaultToolkit(); // 定义工具包
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -110,23 +111,32 @@ public class MainFrame extends JFrame {
 		setTitle("年龄助手 - " + glDateStr + "（农历" + nlDateStr + "）");
 		ImageIcon icon = new ImageIcon(Constants.ICON_URL);
 		setIconImage(icon.getImage());
+		
 		contentPanel = new JPanel();
 //		contentPanel.setBackground(new Color(102, 153, 255));
 		contentPanel.setBorder(new EmptyBorder(0, 0, 0, 0));
 		contentPanel.setToolTipText("");
 		contentPanel.setLayout(null);
-		setContentPane(contentPanel);
 		
 		createMenuBar(frameWidth);
 		createSearchArea();
 		createResultArea();
 		
 		JLabel lblText = new JLabel();
-		lblText.setForeground(SystemColor.GRAY);
+		lblText.setForeground(Color.WHITE);
 		lblText.setFont(new AgeFont());
-		lblText.setText("© 2015 李海涛");
-		lblText.setBounds(177, 356, 90, 21);
+		lblText.setText("© 2015-" + CalendarUtils.getThisYear() + " 李海涛");
+		lblText.setBounds(160, 356, 150, 21);
+		lblText.setAlignmentX(CENTER_ALIGNMENT);
 		contentPanel.add(lblText);
+		
+		setContentPane(contentPanel);
+		
+		// 设置背景图片
+		Image img = new ImageIcon(Constants.BACKGROUND_IMAGE_URL).getImage();
+		BackgroundPanel bgPanel = new BackgroundPanel(img);
+		bgPanel.setBounds(0, 0, frameWidth, frameHeight);
+		add(bgPanel);
 	}
 	
 	/**
@@ -243,69 +253,99 @@ public class MainFrame extends JFrame {
 		glNianCB.setMaximumRowCount(15);
 		glNianCB.setFont(plainFont);
 		glNianCB.setModel(new DefaultComboBoxModel<String>(years));
-		glNianCB.setBounds(132, 51, 54, 21);
+		if (SystemUtils.isMacOS()) {
+			glNianCB.setBounds(124, 51, 85, 21);
+		} else {
+			glNianCB.setBounds(132, 51, 54, 21);
+		}
 		contentPanel.add(glNianCB);
 		
 		nlNianCB = new JComboBox<String>();
 		nlNianCB.setMaximumRowCount(15);
 		nlNianCB.setFont(plainFont);
 		nlNianCB.setModel(new DefaultComboBoxModel<String>(years));
-		nlNianCB.setBounds(132, 79, 54, 21);
+		if (SystemUtils.isMacOS()) {
+			nlNianCB.setBounds(124, 79, 85, 21);
+		} else {
+			nlNianCB.setBounds(132, 79, 54, 21);
+		}
 		contentPanel.add(nlNianCB);
 		
-		JLabel glNianLabel = new JLabel();
-		glNianLabel.setFont(plainFont);
-		glNianLabel.setText("年");
-		glNianLabel.setBounds(190, 51, 18, 21);
-		contentPanel.add(glNianLabel);
-		
-		JLabel nlNianLabel = new JLabel();
-		nlNianLabel.setText("年");
-		nlNianLabel.setFont(plainFont);
-		nlNianLabel.setBounds(190, 79, 18, 21);
-		contentPanel.add(nlNianLabel);
+		if (!SystemUtils.isMacOS()) {
+			JLabel glNianLabel = new JLabel();
+			glNianLabel.setFont(plainFont);
+			glNianLabel.setText("年");
+			glNianLabel.setBounds(190, 51, 18, 21);
+			contentPanel.add(glNianLabel);
+			
+			JLabel nlNianLabel = new JLabel();
+			nlNianLabel.setText("年");
+			nlNianLabel.setFont(plainFont);
+			nlNianLabel.setBounds(190, 79, 18, 21);
+			contentPanel.add(nlNianLabel);
+		}
 		
 		glYueCB = new JComboBox<String>();
 		glYueCB.setFont(plainFont);
 		glYueCB.setModel(new DefaultComboBoxModel<String>(months));
-		glYueCB.setBounds(207, 51, 40, 21);
+		if (SystemUtils.isMacOS()) {
+			glYueCB.setBounds(205, 51, 60, 21);
+		} else {
+			glYueCB.setBounds(207, 51, 40, 21);
+		}
 		contentPanel.add(glYueCB);
 		
 		nlYueCB = new JComboBox<String>();
 		nlYueCB.setFont(plainFont);
 		nlYueCB.setModel(new DefaultComboBoxModel<String>(yueArr));
-		nlYueCB.setBounds(207, 79, 52, 21);
+		if (SystemUtils.isMacOS()) {
+			nlYueCB.setBounds(200, 79, 75, 21);
+		} else {
+			nlYueCB.setBounds(207, 79, 52, 21);
+		}
 		contentPanel.add(nlYueCB);
 		
-		JLabel glYueLabel = new JLabel();
-		glYueLabel.setFont(plainFont);
-		glYueLabel.setText("月");
-		glYueLabel.setBounds(251, 51, 18, 21);
-		contentPanel.add(glYueLabel);
-		
-		JLabel nlYueLabel = new JLabel();
-		nlYueLabel.setText("月");
-		nlYueLabel.setFont(plainFont);
-		nlYueLabel.setBounds(263, 79, 18, 21);
-		contentPanel.add(nlYueLabel);
+		if (!SystemUtils.isMacOS()) {
+			JLabel glYueLabel = new JLabel();
+			glYueLabel.setFont(plainFont);
+			glYueLabel.setText("月");
+			glYueLabel.setBounds(251, 51, 18, 21);
+			contentPanel.add(glYueLabel);
+			
+			JLabel nlYueLabel = new JLabel();
+			nlYueLabel.setText("月");
+			nlYueLabel.setFont(plainFont);
+			nlYueLabel.setBounds(263, 79, 18, 21);
+			contentPanel.add(nlYueLabel);
+		}
 		
 		glRiCB = new JComboBox<String>();
 		glRiCB.setFont(plainFont);
 		glRiCB.setModel(new DefaultComboBoxModel<String>(days));
-		glRiCB.setBounds(269, 51, 40, 21);
+		if (SystemUtils.isMacOS()) {
+			glRiCB.setBounds(261, 51, 60, 21);
+		} else {
+			glRiCB.setBounds(269, 51, 40, 21);
+		}
 		contentPanel.add(glRiCB);
 		
 		nlRiCB = new JComboBox<String>();
 		nlRiCB.setFont(plainFont);
 		nlRiCB.setModel(new DefaultComboBoxModel<String>(riArr));
-		nlRiCB.setBounds(279, 79, 52, 21);
+		if (SystemUtils.isMacOS()) {
+			nlRiCB.setBounds(266, 79, 75, 21);
+		} else {
+			nlRiCB.setBounds(279, 79, 52, 21);
+		}
 		contentPanel.add(nlRiCB);
 		
-		JLabel riLabel = new JLabel();
-		riLabel.setFont(plainFont);
-		riLabel.setText("日");
-		riLabel.setBounds(313, 51, 18, 21);
-		contentPanel.add(riLabel);
+		if (!SystemUtils.isMacOS()) {
+			JLabel riLabel = new JLabel();
+			riLabel.setFont(plainFont);
+			riLabel.setText("日");
+			riLabel.setBounds(313, 51, 18, 21);
+			contentPanel.add(riLabel);
+		}
 		
 		// 查询按钮
 		queryBtn = new JLabel();
@@ -338,36 +378,37 @@ public class MainFrame extends JFrame {
 		Font plainFont = new AgeFont();
 		Font boldFont = new AgeFont().getBoldFont();
 		table = new JTable();
-		table.setBackground(SystemColor.text);
+		table.setOpaque(false);
+		table.setGridColor(Color.WHITE);
 		table.setFont(boldFont);
 		table.setFillsViewportHeight(true);
 		table.setEnabled(false);
 		tableModel = new DefaultTableModel(
 			new Object[][] {
-				{"周岁", ""},
-				{"虚岁", ""},
-				{"生肖", ""},
-				{"星座", ""},
-				{"公历生日", ""},
-				{"农历生日", ""},
-				{"生活天数", ""},
-				{"下次公历生日", ""},
+				{ "周岁", "" },
+				{ "虚岁", "" },
+				{ "生肖", "" },
+				{ "星座", "" },
+				{ "公历生日", "" },
+				{ "农历生日", "" },
+				{ "生活天数", "" },
+				{ "下次公历生日", "" },
 			},
-			new String[] {
-				"name", "description"
-			}
+			new String[] { "name", "description" }
 		);
 		table.setModel(tableModel);
 		DefaultTableCellRenderer nameRender = new DefaultTableCellRenderer();
 		nameRender.setHorizontalAlignment(SwingConstants.CENTER); // 设置字体居中
+		nameRender.setOpaque(false);
 	    MyTableCellRenderer desRender = new MyTableCellRenderer();
 	    desRender.setFont(plainFont);
+	    desRender.setOpaque(false);
 	    table.getColumnModel().getColumn(0).setCellRenderer(nameRender);
 	    table.getColumnModel().getColumn(1).setCellRenderer(desRender);
 		table.getColumnModel().getColumn(0).setPreferredWidth(82);
 		table.getColumnModel().getColumn(1).setPreferredWidth(308);
 		table.setRowHeight(28);
-		table.setBounds(27, 120, 390, 224);
+		table.setBounds(30, 120, 390, 224);
 		contentPanel.add(table);
 	}
 
@@ -471,6 +512,7 @@ public class MainFrame extends JFrame {
 		tableModel.setValueAt(nlBirthday + " " + nlFestival, 5, 1); // 农历生日 + 节日
 		tableModel.setValueAt("你在这个世界上生活了：" + totalDays + "天", 6, 1); // 生活天数
 		tableModel.setValueAt("距下次生日还有：" + toBirthDays + "天，那天是星期" + nextBirthWeek, 7, 1); // 下次公历生日
+		tableModel.fireTableDataChanged();
 	}
 	
 	/**
@@ -570,6 +612,7 @@ public class MainFrame extends JFrame {
 			e.printStackTrace();
 		}
 	}
+	
 }
 
 /**
