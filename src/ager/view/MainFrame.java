@@ -53,6 +53,11 @@ import ager.util.Utils;
  */
 public class MainFrame extends JFrame {
 	private static final long serialVersionUID = 1L;
+	
+	// 菜单栏图标大小
+	private static final int MENUBAR_ICON_WITH = 16;
+	private static final int MENUBAR_ICON_HEIGHT = 16;
+	
 	private JPanel contentPanel; // 主面板
 	private JTable table; // 表格
 	private DefaultTableModel tableModel; // 表格数据
@@ -124,7 +129,7 @@ public class MainFrame extends JFrame {
 		
 		JLabel lblText = new JLabel();
 		lblText.setForeground(Color.WHITE);
-		lblText.setFont(new AgeFont());
+		lblText.setFont(new AgeFont().getBoldFont());
 		lblText.setText("© 2015-" + CalendarUtils.getThisYear() + " 李海涛");
 		lblText.setBounds(160, 356, 150, 21);
 		lblText.setAlignmentX(CENTER_ALIGNMENT);
@@ -174,6 +179,7 @@ public class MainFrame extends JFrame {
 			}
 		});
 		ImageIcon exportIcon = new ImageIcon(Constants.ICON_EXPORT_URL);
+		exportIcon.setImage(exportIcon.getImage().getScaledInstance(MENUBAR_ICON_WITH, MENUBAR_ICON_HEIGHT, Image.SCALE_DEFAULT));
 		export.setIcon(exportIcon);
 		export.setFont(plainFont);
 		tools.add(export);
@@ -184,6 +190,9 @@ public class MainFrame extends JFrame {
 				toOptions();
 			}
 		});
+		ImageIcon optionsIcon = new ImageIcon(Constants.ICON_OPTIONS_URL);
+		optionsIcon.setImage(optionsIcon.getImage().getScaledInstance(MENUBAR_ICON_WITH, MENUBAR_ICON_HEIGHT, Image.SCALE_DEFAULT));
+		options.setIcon(optionsIcon);
 		options.setFont(plainFont);
 		tools.add(options);
 		
@@ -197,6 +206,9 @@ public class MainFrame extends JFrame {
 				toKnowledge();
 			}
 		});
+		ImageIcon knowledgeIcon = new ImageIcon(Constants.ICON_KNOWLEDGE_URL);
+		knowledgeIcon.setImage(knowledgeIcon.getImage().getScaledInstance(MENUBAR_ICON_WITH, MENUBAR_ICON_HEIGHT, Image.SCALE_DEFAULT));
+		knowledge.setIcon(knowledgeIcon);
 		knowledge.setFont(plainFont);
 		help.add(knowledge);
 		
@@ -206,6 +218,9 @@ public class MainFrame extends JFrame {
 				toAbout();
 			}
 		});
+		ImageIcon aboutIcon = new ImageIcon(Constants.ICON_URL);
+		aboutIcon.setImage(aboutIcon.getImage().getScaledInstance(MENUBAR_ICON_WITH, MENUBAR_ICON_HEIGHT, Image.SCALE_DEFAULT));
+		about.setIcon(aboutIcon);
 		about.setFont(plainFont);
 		help.add(about);
 	}
@@ -249,6 +264,7 @@ public class MainFrame extends JFrame {
 		bg.add(glRadio);
 		bg.add(nlRadio);
 		
+		// 公历年份下拉列表
 		glNianCB = new JComboBox<String>();
 		glNianCB.setMaximumRowCount(15);
 		glNianCB.setFont(plainFont);
@@ -260,6 +276,7 @@ public class MainFrame extends JFrame {
 		}
 		contentPanel.add(glNianCB);
 		
+		// 农历年份下拉列表
 		nlNianCB = new JComboBox<String>();
 		nlNianCB.setMaximumRowCount(15);
 		nlNianCB.setFont(plainFont);
@@ -271,6 +288,51 @@ public class MainFrame extends JFrame {
 		}
 		contentPanel.add(nlNianCB);
 		
+		// 公历月份下拉列表
+		glYueCB = new JComboBox<String>();
+		glYueCB.setFont(plainFont);
+		glYueCB.setModel(new DefaultComboBoxModel<String>(months));
+		if (SystemUtils.isMacOS()) {
+			glYueCB.setBounds(205, 51, 66, 21);
+		} else {
+			glYueCB.setBounds(207, 51, 40, 21);
+		}
+		contentPanel.add(glYueCB);
+		
+		// 农历月份下拉列表
+		nlYueCB = new JComboBox<String>();
+		nlYueCB.setFont(plainFont);
+		nlYueCB.setModel(new DefaultComboBoxModel<String>(yueArr));
+		if (SystemUtils.isMacOS()) {
+			nlYueCB.setBounds(200, 79, 75, 21);
+		} else {
+			nlYueCB.setBounds(207, 79, 52, 21);
+		}
+		contentPanel.add(nlYueCB);
+		
+		// 公历日下拉列表
+		glRiCB = new JComboBox<String>();
+		glRiCB.setFont(plainFont);
+		glRiCB.setModel(new DefaultComboBoxModel<String>(days));
+		if (SystemUtils.isMacOS()) {
+			glRiCB.setBounds(266, 51, 66, 21);
+		} else {
+			glRiCB.setBounds(269, 51, 40, 21);
+		}
+		contentPanel.add(glRiCB);
+		
+		// 农历日下拉列表
+		nlRiCB = new JComboBox<String>();
+		nlRiCB.setFont(plainFont);
+		nlRiCB.setModel(new DefaultComboBoxModel<String>(riArr));
+		if (SystemUtils.isMacOS()) {
+			nlRiCB.setBounds(266, 79, 75, 21);
+		} else {
+			nlRiCB.setBounds(279, 79, 52, 21);
+		}
+		contentPanel.add(nlRiCB);
+		
+		// 年月日标签
 		if (!SystemUtils.isMacOS()) {
 			JLabel glNianLabel = new JLabel();
 			glNianLabel.setFont(plainFont);
@@ -283,29 +345,7 @@ public class MainFrame extends JFrame {
 			nlNianLabel.setFont(plainFont);
 			nlNianLabel.setBounds(190, 79, 18, 21);
 			contentPanel.add(nlNianLabel);
-		}
 		
-		glYueCB = new JComboBox<String>();
-		glYueCB.setFont(plainFont);
-		glYueCB.setModel(new DefaultComboBoxModel<String>(months));
-		if (SystemUtils.isMacOS()) {
-			glYueCB.setBounds(205, 51, 60, 21);
-		} else {
-			glYueCB.setBounds(207, 51, 40, 21);
-		}
-		contentPanel.add(glYueCB);
-		
-		nlYueCB = new JComboBox<String>();
-		nlYueCB.setFont(plainFont);
-		nlYueCB.setModel(new DefaultComboBoxModel<String>(yueArr));
-		if (SystemUtils.isMacOS()) {
-			nlYueCB.setBounds(200, 79, 75, 21);
-		} else {
-			nlYueCB.setBounds(207, 79, 52, 21);
-		}
-		contentPanel.add(nlYueCB);
-		
-		if (!SystemUtils.isMacOS()) {
 			JLabel glYueLabel = new JLabel();
 			glYueLabel.setFont(plainFont);
 			glYueLabel.setText("月");
@@ -317,29 +357,7 @@ public class MainFrame extends JFrame {
 			nlYueLabel.setFont(plainFont);
 			nlYueLabel.setBounds(263, 79, 18, 21);
 			contentPanel.add(nlYueLabel);
-		}
 		
-		glRiCB = new JComboBox<String>();
-		glRiCB.setFont(plainFont);
-		glRiCB.setModel(new DefaultComboBoxModel<String>(days));
-		if (SystemUtils.isMacOS()) {
-			glRiCB.setBounds(261, 51, 60, 21);
-		} else {
-			glRiCB.setBounds(269, 51, 40, 21);
-		}
-		contentPanel.add(glRiCB);
-		
-		nlRiCB = new JComboBox<String>();
-		nlRiCB.setFont(plainFont);
-		nlRiCB.setModel(new DefaultComboBoxModel<String>(riArr));
-		if (SystemUtils.isMacOS()) {
-			nlRiCB.setBounds(266, 79, 75, 21);
-		} else {
-			nlRiCB.setBounds(279, 79, 52, 21);
-		}
-		contentPanel.add(nlRiCB);
-		
-		if (!SystemUtils.isMacOS()) {
 			JLabel riLabel = new JLabel();
 			riLabel.setFont(plainFont);
 			riLabel.setText("日");
@@ -378,6 +396,7 @@ public class MainFrame extends JFrame {
 		Font plainFont = new AgeFont();
 		Font boldFont = new AgeFont().getBoldFont();
 		table = new JTable();
+		// 表格背景设为透明
 		table.setOpaque(false);
 		table.setGridColor(Color.WHITE);
 		table.setFont(boldFont);
