@@ -4,6 +4,4 @@
 
 ![ScreenShot](./external/ScreenShot.png)
 
-[下载Ager](https://pan.baidu.com/s/14aUJBPKAUXhX5t5L-e8KLg)
-
-提取码: jvk0
+[下载年龄助手](https://github.com/lihthub/ager/releases)
